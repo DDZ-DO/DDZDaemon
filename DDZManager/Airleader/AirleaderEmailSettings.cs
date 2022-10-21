@@ -8,4 +8,6 @@ public class AirleaderEmailSettings
     public string EmailAddress { get; set; }
     
     public string DestinationMailFolderAfterProcessing { get; set; }
+    
+    public string ClientSecret { get; set; }
 }

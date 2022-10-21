@@ -96,7 +96,7 @@ public class AirleaderEmailCronJob : ICronJob
             Authority = "https://graph.microsoft.com", //fix
             Directory = "7746237a-ff88-4f28-9ced-3eae6358054e", //Verzeichnis-ID (Mandant)
             Application = "f625d2d1-fd52-4fed-8653-00e3ab57f33d", //Anwendungs-ID (Client)
-            ClientSecret = "5.J8Q~LH-PxBifA5Zq6H2Mm5VHO9s4JcAaV6Gcfk" //Geheimnis Wert
+            _settings.ClientSecret
         };
 
         var app = ConfidentialClientApplicationBuilder.Create(authentication.Application)
