@@ -1,0 +1,24 @@
+.header-bar {
+  height: 3rem;
+  border-radius: 15px 15px 0px 0px;
+  background-color: #EADD28;
+  border-top: 0.1rem solid #EADD28;
+  padding: 0.5rem;
+  // border-bottom: 0.1rem solid #EADD28;
+  font-family: var(--font-family);
+}
+
+.header-main-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.header-right {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.header-left {
+  font-size: 1rem;
+  font-weight: 500;
+}

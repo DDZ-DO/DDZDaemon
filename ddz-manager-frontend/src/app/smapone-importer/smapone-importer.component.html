@@ -1,0 +1,46 @@
+<p-card>
+  <p-card header="Status">
+    <table>
+      <tr>
+        <td>Service-Status:</td>
+        <td> {{ status }}</td>
+      </tr>
+      <tr>
+        <td>Nächste Ausführung:</td>
+        <td> {{ nextExecution }}</td>
+      </tr>
+      <tr>
+        <td>Letzte Ausführung:</td>
+        <td> {{ lastExecution }}</td>
+      </tr>
+    </table>
+    <br>
+    <table>
+      <tr>
+        <td>
+          <p-button styleClass="p-button-success" label="Start" [disabled]="status==='läuft'" (click)="StartImporter()"></p-button>
+        </td>
+        <td>
+          <p-button styleClass="p-button-danger" label="Stop" class="p-button-sm" [disabled]="status==='gestoppt'" (click)="StopImporter()"></p-button>
+        </td>
+        <td>
+          <p-button styleClass="p-button-warning" label="Manuell" class="p-button-sm" (click)="ForceStart()"></p-button>
+        </td>
+      </tr>
+    </table>
+  </p-card>
+  <br>
+  <br>
+  <p-card header="Importer-Log - (100 Zeilen)">
+    <button pButton (click)="ReloadLog()" class="p-button-sm p-grid p-jc-end" icon="pi pi-refresh"
+      [disabled]="logDataLoading"></button>
+
+  <p-table [value]="logOutput"  styleClass="p-datatable-sm p-datatable-striped" [scrollable]="true"  scrollHeight="400px" responsiveLayout="scroll">
+    <ng-template pTemplate="body" let-logLine>
+        <tr>
+            <td>{{logLine}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+  </p-card>
+</p-card>
