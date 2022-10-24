@@ -3,6 +3,10 @@ using DDZManager.CronService;
 using DDZManager.SmapOneImporter;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
+using Serilog.Events;
+
+const string outputTemplate =
+    "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{ThreadId}] [{SourceContext}] {Message}{NewLine}{Exception}";
 
 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 var builder = WebApplication.CreateBuilder(args);
@@ -29,9 +33,10 @@ builder.Services.AddHostedService<CronService>();
 builder.Host.UseWindowsService();
 builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
             .ReadFrom.Configuration(hostingContext.Configuration)
+            .Enrich.WithThreadId()
             .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .WriteTo.File(@"./logs/service.log", rollingInterval: RollingInterval.Month, retainedFileCountLimit: 3));
+            .WriteTo.Console(LogEventLevel.Information,outputTemplate)
+            .WriteTo.File(@"./logs/service.log", LogEventLevel.Information, outputTemplate, rollingInterval: RollingInterval.Month, retainedFileCountLimit: 3));
 
 var app = builder.Build();
 

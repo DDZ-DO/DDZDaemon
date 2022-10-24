@@ -33,7 +33,7 @@ public class AirleaderEmailCronJob : ICronJob
 
     public async Task Start()
     {
-        _logger.LogDebug($"Started at {DateTime.Now.ToLongTimeString()}");
+        _logger.LogInformation("cronjob started");
         try
         {
             var graphClient = await Login();
@@ -73,6 +73,7 @@ public class AirleaderEmailCronJob : ICronJob
                 await graphClient.Users[_settings.EmailAddress].Messages[msg.Id].Move(mailFolderId).Request().PostAsync();
                 _logger.LogInformation("Moved message to {FolderName}", _settings.DestinationMailFolderAfterProcessing );
             }
+            _logger.LogInformation("cronjob finished");
         }
         catch (Exception ex)
         {

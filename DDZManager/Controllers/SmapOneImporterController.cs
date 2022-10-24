@@ -43,13 +43,40 @@ namespace DDZManager.Controllers
         public string[] GetImporterLog()
         {
             var automatorLogFile = _settings.LogFilePath;
+            var readLines = new List<string>();
             if (System.IO.File.Exists(_settings.LogFilePath))
             {
-                var readLines = System.IO.File.ReadLines(automatorLogFile).ToList();
-                readLines.Reverse();
-                return readLines.GetRange(0, 100).ToArray();
+                using (FileStream fileStream = new FileStream(
+                           automatorLogFile,
+                           FileMode.Open,
+                           FileAccess.Read,
+                           FileShare.ReadWrite))
+                {
+                    using (StreamReader streamReader = new StreamReader(fileStream))
+                    {
+                        string? line;
+                        while ((line = streamReader.ReadLine()) != null)
+                        {
+                            readLines.Add(line);
+                        }
+                    }
+                }
             }
-            throw new Exception($"{_settings.LogFilePath} does not exists.");
+            else
+            {
+                throw new Exception($"{_settings.LogFilePath} does not exists.");
+            }
+
+            readLines.Reverse();
+            return readLines.GetRange(0, 100).ToArray();
+
+            // if (System.IO.File.Exists(_settings.LogFilePath))
+            // {
+            //     var readLines = System.IO.File.ReadLines(automatorLogFile).ToList();
+            //     readLines.Reverse();
+            //     return readLines.GetRange(0, 100).ToArray();
+            // }
+            // throw new Exception($"{_settings.LogFilePath} does not exists.");
         }
 
         [HttpPost()]
@@ -70,7 +97,7 @@ namespace DDZManager.Controllers
         [HttpPost()]
         public void ForceStart()
         {
-            _ = _smapOneImporterCronJob.Start();
+            _ = _smapOneImporterCronJob.ForceStart();
             AddToProtocol($"Importer manuell ausgelöst");
         }
 
