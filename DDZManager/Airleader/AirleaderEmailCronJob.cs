@@ -92,6 +92,7 @@ public class AirleaderEmailCronJob : ICronJob
     {
         // https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/f625d2d1-fd52-4fed-8653-00e3ab57f33d/objectId/d9513471-288d-464b-b419-cffec1ce2267/isMSAApp~/false/defaultBlade/Overview/appSignInAudience/AzureADMyOrg/servicePrincipalCreated~/true
         // Secret muss nach 24 Monaten erneuert werden 21.10.2022
+        // https://learn.microsoft.com/en-us/graph/auth-register-app-v2
         var authentication = new
         {
             Authority = "https://graph.microsoft.com", //fix
